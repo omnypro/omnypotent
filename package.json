@@ -1,7 +1,7 @@
 {
   "name": "@omnypro/omnypotent",
   "version": "0.0.0",
-  "description": "Omnyist brand system: color tokens, typefaces and a Storybook reference.",
+  "description": "Colors and type for the Omnyist brand, with a Storybook reference.",
   "type": "module",
   "repository": {
     "type": "git",
