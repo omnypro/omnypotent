@@ -73,3 +73,5 @@ uses npm trusted publishing (OIDC), so no npm token is stored.
   `publish.yml`.
 - npm's documentation does not say whether the package must already exist
   before that configuration, so the first publish may need to be done by hand.
+- A new trusted publisher configuration must complete its first successful
+  publish within 2 days, or it expires.
