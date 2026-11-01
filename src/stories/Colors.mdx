@@ -1,16 +1,17 @@
 import { Meta } from "@storybook/addon-docs/blocks";
 import tokens from "../../dist/tokens.json";
 import dark from "../../tokens/semantic/dark.json";
+import { rampGroups } from "./ramps.ts";
 
 <Meta title="Foundations/Colors" />
 
-export const GROUPS = ["neutral", "primary", "black", "white"].map((group) => [
-  group,
-  Object.entries(tokens.color).filter(([name]) => name.startsWith(`${group}-`)),
-]);
-
 export const SEMANTIC = Object.entries(dark.semantic).filter(
   ([name]) => !name.startsWith("$"),
+);
+
+export const GROUPS = rampGroups(
+  tokens.color,
+  SEMANTIC.map(([name]) => name),
 );
 
 <div className="omny-docs">
