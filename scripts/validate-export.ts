@@ -29,7 +29,7 @@ function checkToken(path: string, token: Json, issues: ExportIssue[]) {
 
   const leaf = path.split("/").at(-1)!.toLowerCase();
   if (!CSS_NAME.test(leaf)) {
-    report(`"${leaf}" cannot become a CSS custom property name`);
+    report(`"${leaf}" cannot be the name of a CSS custom property`);
   }
 
   if (token.$type !== "color") {
