@@ -114,3 +114,51 @@ test("a build run from another working directory gives the same output", async (
     await readFile(join(inProcess, "tokens.css"), "utf8"),
   );
 });
+
+async function builtDir() {
+  const outDir = await tempDir();
+  await build({ outDir });
+  return outDir;
+}
+
+test("tokens.json is nested by kind with resolved values", async () => {
+  const dir = await builtDir();
+  const tokens = JSON.parse(await readFile(join(dir, "tokens.json"), "utf8"));
+  expect(tokens.color["neutral-1"]).toBe("#F3F4FA");
+  expect(tokens.color["black-50"]).toBe("rgba(0, 0, 0, 0.5)");
+  expect(tokens.color.surface).toBe("#0E0F16");
+  expect(tokens.font.family.sans).toContain("Space Grotesk Variable");
+  expect(tokens.font.size.base).toBe("1rem");
+});
+
+test("index.js exports the same tokens and index.d.ts declares them", async () => {
+  const dir = await builtDir();
+  const parsed = JSON.parse(await readFile(join(dir, "tokens.json"), "utf8"));
+  const module = await import(join(dir, "index.js"));
+  expect(module.tokens).toEqual(parsed);
+  expect(await readFile(join(dir, "index.d.ts"), "utf8")).toContain(
+    "export declare const tokens:",
+  );
+});
+
+test("the TS and JSON outputs are byte-identical across builds", async () => {
+  const [a, b] = [await builtDir(), await builtDir()];
+  for (const file of ["tokens.json", "index.js", "index.d.ts"]) {
+    expect(await readFile(join(a, file), "utf8")).toBe(
+      await readFile(join(b, file), "utf8"),
+    );
+  }
+});
+
+test("a token kind with no place in tokens.json fails the build", async () => {
+  const root = await tempRoot();
+  await writeFile(
+    join(root, "tokens/type/extra.json"),
+    JSON.stringify({ spacing: { sm: { $type: "dimension", $value: "4px" } } }),
+  );
+  const error = await build({ root, outDir: await tempDir() }).catch(
+    (e: Error) => e,
+  );
+  expect(error).toBeInstanceOf(Error);
+  expect(String(error)).toContain("spacing-sm");
+});

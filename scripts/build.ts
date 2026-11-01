@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import StyleDictionary from "style-dictionary";
 import { formattedVariables } from "style-dictionary/utils";
 import { toCssColor, type ColorValue } from "./color.ts";
+import { toModule } from "./emit-module.ts";
 import { cssName } from "./names.ts";
 import { validateExport } from "./validate-export.ts";
 
@@ -43,6 +44,36 @@ StyleDictionary.registerFormat({
   },
 });
 
+type Tokens = {
+  color: Record<string, string>;
+  font: { family: Record<string, string>; size: Record<string, string> };
+};
+
+const TOKEN_GROUPS: [
+  prefix: string,
+  place: (t: Tokens) => Record<string, string>,
+][] = [
+  ["color-", (t) => t.color],
+  ["font-family-", (t) => t.font.family],
+  ["font-size-", (t) => t.font.size],
+];
+
+StyleDictionary.registerFormat({
+  name: "omnypotent/tokens-json",
+  format: ({ dictionary }) => {
+    const tokens: Tokens = { color: {}, font: { family: {}, size: {} } };
+    for (const token of dictionary.allTokens) {
+      const group = TOKEN_GROUPS.find(([prefix]) =>
+        token.name.startsWith(prefix),
+      );
+      if (!group) throw new Error(`No place in tokens.json for ${token.name}`);
+      const [prefix, place] = group;
+      place(tokens)[token.name.slice(prefix.length)] = String(token.$value);
+    }
+    return `${JSON.stringify(tokens, null, 2)}\n`;
+  },
+});
+
 export type BuildOptions = { root?: string; outDir?: string };
 
 export async function build(options: BuildOptions = {}): Promise<void> {
@@ -76,11 +107,20 @@ export async function build(options: BuildOptions = {}): Promise<void> {
             format: "omnypotent/css",
             options: { outputReferences: true },
           },
+          { destination: "tokens.json", format: "omnypotent/tokens-json" },
         ],
       },
     },
   });
   await dictionary.buildAllPlatforms();
+
+  const tokens = await Bun.file(join(outDir, "tokens.json")).json();
+  const modules = [toModule("tokens", tokens)];
+  await Bun.write(join(outDir, "index.js"), modules.map((m) => m.js).join(""));
+  await Bun.write(
+    join(outDir, "index.d.ts"),
+    modules.map((m) => m.dts).join(""),
+  );
 }
 
 if (import.meta.main) {
