@@ -1,0 +1,11 @@
+{
+  "semantic": {
+    "$type": "color",
+    "surface": { "$value": "{Color.Neutral.neutral-8}" },
+    "surface-raised": { "$value": "{Color.Neutral.neutral-7}" },
+    "text": { "$value": "{Color.Neutral.neutral-1}" },
+    "text-muted": { "$value": "{Color.Neutral.neutral-5}" },
+    "border": { "$value": "{Color.Utility.White.white-10}" },
+    "accent": { "$value": "{Color.Primary.primary-7}" }
+  }
+}
