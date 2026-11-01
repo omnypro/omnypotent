@@ -92,7 +92,7 @@ export async function build(options: BuildOptions = {}): Promise<void> {
   await mkdir(outDir, { recursive: true });
   const dictionary = new StyleDictionary({
     usesDtcg: true,
-    log: { verbosity: "verbose" },
+    log: { verbosity: "verbose", warnings: "error" },
     source: [
       join(root, "tokens/figma/variables.json"),
       join(root, "tokens/semantic/*.json"),

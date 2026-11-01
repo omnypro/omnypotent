@@ -162,3 +162,18 @@ test("a token kind with no place in tokens.json fails the build", async () => {
   expect(error).toBeInstanceOf(Error);
   expect(String(error)).toContain("spacing-sm");
 });
+
+test("two Figma tokens that share a CSS name fail the build", async () => {
+  const root = await tempRoot();
+  const file = join(root, "tokens/figma/variables.json");
+  const data = await Bun.file(file).json();
+  data.Color.Brand = {
+    "neutral-1": structuredClone(data.Color.Neutral["neutral-1"]),
+  };
+  await writeFile(file, JSON.stringify(data));
+  const error = await build({ root, outDir: await tempDir() }).catch(
+    (e: Error) => e,
+  );
+  expect(error).toBeInstanceOf(Error);
+  expect(String(error)).toContain("neutral-1");
+});
