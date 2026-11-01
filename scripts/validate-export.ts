@@ -3,6 +3,7 @@ export type ExportIssue = { path: string; message: string };
 type Json = Record<string, unknown>;
 
 const HEX = /^#[0-9A-Fa-f]{6}$/;
+const CSS_NAME = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 const isObject = (value: unknown): value is Json =>
   typeof value === "object" && value !== null && !Array.isArray(value);
@@ -23,6 +24,11 @@ const inUnitRange = (value: unknown) =>
 function checkToken(path: string, token: Json, issues: ExportIssue[]) {
   const report = (message: string) => issues.push({ path, message });
   const value = token.$value;
+
+  const leaf = path.split("/").at(-1)!.toLowerCase();
+  if (!CSS_NAME.test(leaf)) {
+    report(`"${leaf}" cannot become a CSS custom property name`);
+  }
 
   if (token.$type !== "color") {
     report(`$type is ${JSON.stringify(token.$type)}, expected "color"`);

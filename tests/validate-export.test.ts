@@ -73,3 +73,19 @@ test("a token without a Figma variable ID is reported", () => {
   expect(issues).toHaveLength(1);
   expect(issues[0]?.path).toBe("Color/Utility/White/white-10");
 });
+
+test("a leaf name that cannot be a CSS custom property is reported", () => {
+  const data = copy();
+  data.Color.Brand = {
+    "Brand Teal": structuredClone(data.Color.Primary["primary-1"]),
+  };
+  const issues = validateExport(data);
+  expect(issues).toHaveLength(1);
+  expect(issues[0]?.path).toBe("Color/Brand/Brand Teal");
+});
+
+test("a mixed-case leaf name is accepted because it is lowercased", () => {
+  const data = copy();
+  data.Color.Brand = { Teal: structuredClone(data.Color.Primary["primary-1"]) };
+  expect(validateExport(data)).toEqual([]);
+});
