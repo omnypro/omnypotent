@@ -1,0 +1,35 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import tokens from "../../dist/tokens.json";
+
+<Meta title="Foundations/Typography" />
+
+export const FAMILIES = Object.entries(tokens.font.family);
+export const SIZES = Object.entries(tokens.font.size);
+
+<div className="omny-docs">
+
+{FAMILIES.map(([family, stack]) => (
+
+  <div key={family} data-family={family}>
+    <h2>{family}</h2>
+    <p className="mono">--font-family-{family}: {stack}</p>
+    {SIZES.map(([size, rem]) => (
+      <p
+        data-size={size}
+        key={size}
+        style={{
+          fontFamily: `var(--font-family-${family})`,
+          fontSize: `var(--font-size-${size})`,
+          margin: "0 0 0.5rem",
+        }}
+      >
+        <span className="mono">
+          {size} {rem}
+        </span>{" "}
+        The quick brown fox jumps over the lazy dog.
+      </p>
+    ))}
+  </div>
+))}
+
+</div>
