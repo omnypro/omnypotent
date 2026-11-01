@@ -1,10 +1,11 @@
 import { expect, test } from "bun:test";
+import { fileURLToPath } from "node:url";
 import { build } from "../scripts/build.ts";
 
 await build();
 
 const proc = Bun.spawn(["npm", "pack", "--dry-run", "--json"], {
-  cwd: new URL("..", import.meta.url).pathname,
+  cwd: fileURLToPath(new URL("..", import.meta.url)),
   stdout: "pipe",
   stderr: "ignore",
 });

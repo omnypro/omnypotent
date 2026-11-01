@@ -1,3 +1,5 @@
+import { fileURLToPath } from "node:url";
+
 export type ExportIssue = { path: string; message: string };
 
 type Json = Record<string, unknown>;
@@ -103,7 +105,7 @@ export function validateExport(data: unknown): ExportIssue[] {
 if (import.meta.main) {
   const file =
     process.argv[2] ??
-    new URL("../tokens/figma/variables.json", import.meta.url).pathname;
+    fileURLToPath(new URL("../tokens/figma/variables.json", import.meta.url));
   const issues = validateExport(await Bun.file(file).json());
   for (const issue of issues) console.log(`${issue.path}: ${issue.message}`);
   process.exit(issues.length === 0 ? 0 : 1);

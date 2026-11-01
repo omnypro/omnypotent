@@ -1,3 +1,7 @@
+import { copyFile, mkdir, mkdtemp } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { expect, test } from "bun:test";
 import { validateExport } from "../scripts/validate-export.ts";
 
@@ -88,4 +92,23 @@ test("a mixed-case leaf name is accepted because it is lowercased", () => {
   const data = copy();
   data.Color.Brand = { Teal: structuredClone(data.Color.Primary["primary-1"]) };
   expect(validateExport(data)).toEqual([]);
+});
+
+test("the CLI finds the export when the checkout path has a space", async () => {
+  const repo = fileURLToPath(new URL("..", import.meta.url));
+  const dir = join(await mkdtemp(join(tmpdir(), "omnypotent-")), "a space");
+  await mkdir(join(dir, "scripts"), { recursive: true });
+  await mkdir(join(dir, "tokens/figma"), { recursive: true });
+  for (const file of [
+    "scripts/validate-export.ts",
+    "tokens/figma/variables.json",
+  ]) {
+    await copyFile(join(repo, file), join(dir, file));
+  }
+  const proc = Bun.spawn(["bun", join(dir, "scripts/validate-export.ts")], {
+    cwd: "/",
+    stdout: "ignore",
+    stderr: "ignore",
+  });
+  expect(await proc.exited).toBe(0);
 });

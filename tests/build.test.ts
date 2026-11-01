@@ -2,10 +2,11 @@ import { expect, test } from "bun:test";
 import { cp, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { build } from "../scripts/build.ts";
 import { contrastRatio } from "../scripts/contrast.ts";
 
-const repo = new URL("..", import.meta.url).pathname;
+const repo = fileURLToPath(new URL("..", import.meta.url));
 
 const tempDir = () => mkdtemp(join(tmpdir(), "omnypotent-"));
 
