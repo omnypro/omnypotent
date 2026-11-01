@@ -23,3 +23,15 @@ test("quotes and backslashes in strings survive in both outputs", () => {
     'export declare const t: { readonly f: "\\"Space Mono\\", \\\\" };\n',
   );
 });
+
+test("arrays become readonly tuples and null stays null", () => {
+  const { js, dts } = toModule("f", [{ a: "x", u: null }]);
+  expect(js).toBe('export const f = [{"a":"x","u":null}];\n');
+  expect(dts).toBe(
+    'export declare const f: readonly [{ readonly a: "x"; readonly u: null }];\n',
+  );
+});
+
+test("an empty array is an empty tuple", () => {
+  expect(toModule("f", []).dts).toBe("export declare const f: readonly [];\n");
+});

@@ -5,6 +5,7 @@ import StyleDictionary from "style-dictionary";
 import { formattedVariables } from "style-dictionary/utils";
 import { toCssColor, type ColorValue } from "./color.ts";
 import { toModule } from "./emit-module.ts";
+import { copyFonts, fontManifest, fontsCss } from "./fonts.ts";
 import { cssName } from "./names.ts";
 import { validateExport } from "./validate-export.ts";
 
@@ -115,7 +116,15 @@ export async function build(options: BuildOptions = {}): Promise<void> {
   await dictionary.buildAllPlatforms();
 
   const tokens = await Bun.file(join(outDir, "tokens.json")).json();
-  const modules = [toModule("tokens", tokens)];
+  await copyFonts(outDir);
+  const manifest = fontManifest();
+  await Bun.write(join(outDir, "fonts.css"), fontsCss(manifest));
+  await Bun.write(
+    join(outDir, "fonts.json"),
+    `${JSON.stringify(manifest, null, 2)}\n`,
+  );
+
+  const modules = [toModule("tokens", tokens), toModule("fonts", manifest)];
   await Bun.write(join(outDir, "index.js"), modules.map((m) => m.js).join(""));
   await Bun.write(
     join(outDir, "index.d.ts"),
