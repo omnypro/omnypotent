@@ -1,0 +1,42 @@
+{
+  "name": "@omnypro/omnypotent",
+  "version": "0.0.0",
+  "description": "Omnyist brand system: color tokens, typefaces and a Storybook reference.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omnypro/omnypotent.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./fonts.json": "./dist/fonts.json",
+    "./fonts/*": "./dist/fonts/*"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun scripts/build.ts",
+    "lint": "oxlint --type-aware",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@fontsource/space-mono": "^5.3.0",
+    "@types/bun": "^1.4.4",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
+    "oxlint-tsgolint": "^7.0.2005",
+    "style-dictionary": "^5.7.1",
+    "typescript": "^7.0.2"
+  }
+}
