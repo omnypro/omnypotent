@@ -112,3 +112,10 @@ test("the CLI finds the export when the checkout path has a space", async () => 
   });
   expect(await proc.exited).toBe(0);
 });
+
+test("the committed export ends with a newline", async () => {
+  const text = await Bun.file(
+    new URL("../tokens/figma/variables.json", import.meta.url),
+  ).text();
+  expect(text.endsWith("\n")).toBe(true);
+});

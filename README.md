@@ -53,7 +53,7 @@ bun test
 Figma owns the color ramps. Code never edits them.
 
 1. In the Figma variables file, export the variables (the native export).
-2. Replace `tokens/figma/variables.json` with the exported file, untouched.
+2. Replace `tokens/figma/variables.json` with the exported file.
 3. Run `bun run build`. It validates the export first and fails with the path of
    any bad token.
 4. Commit the new export.
