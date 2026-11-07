@@ -27,8 +27,7 @@ test("the tarball has every built output and both font licenses", () => {
   }
 });
 
-test("the tarball holds dist, package.json and the README, and nothing else", () => {
-  expect(files).toContain("README.md");
+test("the tarball holds dist, package.json, the README and the license, and nothing else", () => {
   const others = files.filter((f) => !f.startsWith("dist/"));
-  expect(others.sort()).toEqual(["README.md", "package.json"]);
+  expect(others.sort()).toEqual(["LICENSE", "README.md", "package.json"]);
 });
