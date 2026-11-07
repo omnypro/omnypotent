@@ -60,3 +60,7 @@ Push a tag named `v<version>` to publish to npm, where `<version>` matches `pack
 - Set up the trusted publisher on npmjs.com, per package, under the package's Settings and then Trusted publishing. Enter `publish.yml` as the workflow filename.
 - Check the npm documentation on whether the package must exist before you set this up. You may have to publish the first version by hand.
 - A trusted publisher that you add on npmjs.com expires unless its first publish succeeds within 2 days.
+
+## License
+
+MIT. The fonts keep their own licenses, which are in `dist/fonts`.

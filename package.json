@@ -1,6 +1,7 @@
 {
   "name": "@omnypro/omnypotent",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "license": "MIT",
   "description": "Colors and type for the Omnyist brand, with a Storybook reference.",
   "type": "module",
   "repository": {
