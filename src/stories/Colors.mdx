@@ -1,0 +1,78 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import tokens from "../../dist/tokens.json";
+import dark from "../../tokens/semantic/dark.json";
+import { rampGroups } from "./ramps.ts";
+
+<Meta title="Foundations/Colors" />
+
+export const SEMANTIC = Object.entries(dark.semantic).filter(
+  ([name]) => !name.startsWith("$"),
+);
+
+export const GROUPS = rampGroups(
+  tokens.color,
+  SEMANTIC.map(([name]) => name),
+);
+
+<div className="omny-docs">
+
+## Semantic (dark)
+
+<table className="omny-semantic">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Ramp reference</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    {SEMANTIC.map(([name, token]) => (
+      <tr key={name} data-semantic={name}>
+        <td>
+          <span
+            style={{
+              background: `var(--color-${name})`,
+              border: "1px solid var(--color-border)",
+              display: "inline-block",
+              height: "0.875rem",
+              marginRight: "0.5rem",
+              width: "0.875rem",
+            }}
+          />
+          <code>--color-{name}</code>
+        </td>
+        <td>
+          <code>{token.$value}</code>
+        </td>
+        <td>
+          <code>{tokens.color[name]}</code>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+## Ramps
+
+{GROUPS.map(([group, entries]) => (
+
+  <div key={group}>
+    <h3>{group}</h3>
+    <div className="omny-swatches">
+      {entries.map(([name, value]) => (
+        <div className="omny-swatch" data-swatch={name} key={name}>
+          <div className="chip" style={{ background: value }} />
+          <div className="label">
+            <div>{name}</div>
+            <code>--color-{name}</code>
+            <br />
+            <code>{value}</code>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+))}
+
+</div>
