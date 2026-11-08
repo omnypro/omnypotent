@@ -41,6 +41,16 @@ bun run storybook   # the reference, on http://localhost:6006
 bun test
 ```
 
+## Import the colors into Sketch
+
+Sketch can't read the Figma export. The [figma-to-sketch](https://github.com/omnypro/figma-to-sketch) plugin adds colors to a document as Color Variables.
+
+1. Run `bun run sketch`. It writes `sketch/omnypotent.tokens.json`, which holds the Figma ramps and the semantic colors.
+2. Open a Sketch document and choose Plugins → Figma to Sketch → Import Figma Colors.
+3. Pick `sketch/omnypotent.tokens.json`.
+
+The semantic colors arrive as `semantic/surface`, `semantic/text`, and so on. Each holds the color that it resolves to. Run the steps again after a change, and the plugin updates the variables that already exist.
+
 ## Update the colors from Figma
 
 Figma owns the color ramps. Code never edits them.
