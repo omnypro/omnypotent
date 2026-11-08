@@ -46,7 +46,7 @@ export async function checkCdn(path: string): Promise<CdnIssue[]> {
 }
 
 if (import.meta.main) {
-  const path = process.argv[2] ?? "spike/space-grotesk-latin-wght-normal.woff2";
+  const path = process.argv[2] ?? "hurme/HurmeGeometricSans2-Regular.woff2";
   const issues = await checkCdn(path);
   for (const issue of issues) console.log(`${issue.check}: ${issue.message}`);
   if (issues.length === 0) console.log(`${HOST}/${path}: all checks pass`);
