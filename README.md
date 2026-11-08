@@ -30,7 +30,7 @@ fonts[0].path; // "fonts/space-grotesk-latin-wght-normal.woff2"
 
 You can also import `@omnypro/omnypotent/tokens.json` and `@omnypro/omnypotent/fonts.json`. The same data is in both. Font paths are relative to the package's `dist` folder.
 
-You get Space Grotesk and Space Mono with the package. Both are under the SIL Open Font License, and the license files are in `dist/fonts`.
+You get Space Grotesk and Space Mono with the package, each in the latin, latin-ext, and vietnamese subsets. Every `@font-face` has a `unicode-range`, so a browser downloads a subset only when a page uses its characters. Both families are under the SIL Open Font License, and the license files are in `dist/fonts`.
 
 ## Develop
 
