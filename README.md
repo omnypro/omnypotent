@@ -32,6 +32,8 @@ You can also import `@omnypro/omnypotent/tokens.json` and `@omnypro/omnypotent/f
 
 You get Space Grotesk and Space Mono with the package, each in the latin, latin-ext, and vietnamese subsets. Every `@font-face` has a `unicode-range`, so a browser downloads a subset only when a page uses its characters. Both families are under the SIL Open Font License, and the license files are in `dist/fonts`.
 
+`@omnypro/omnypotent/hurme.css` declares Hurme Geometric Sans 2, the licensed brand typeface, in seven weights with obliques. The files load from `cdn.omnyist.productions`, which allows the Omnyist sites. The package does not contain them.
+
 ## Develop
 
 ```sh
