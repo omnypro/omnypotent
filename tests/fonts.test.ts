@@ -16,21 +16,33 @@ const read = (dir: string, file: string) => readFile(join(dir, file), "utf8");
 test("fonts.json lists the shipped files with no CDN URL", async () => {
   const dir = await builtDir();
   const manifest = JSON.parse(await read(dir, "fonts.json"));
-  expect(manifest).toHaveLength(5);
+  expect(manifest).toHaveLength(15);
   for (const font of manifest) {
     expect(existsSync(join(dir, font.path))).toBe(true);
     expect(font.url).toBeNull();
     expect(font.style).toBe("normal");
+    expect(["latin", "latin-ext", "vietnamese"]).toContain(font.subset);
+    expect(font.unicodeRange).toMatch(/^U\+[0-9A-F]/);
   }
   const mono = manifest.filter(
     (f: { family: string }) => f.family === "Space Mono",
   );
   expect(mono.map((f: { weight: string }) => f.weight).sort()).toEqual([
-    "400",
-    "400",
-    "700",
-    "700",
+    ...Array(6).fill("400"),
+    ...Array(6).fill("700"),
   ]);
+});
+
+test("fonts.css has one ranged face per subset, with latin declared last", async () => {
+  const css = await read(await builtDir(), "fonts.css");
+  const faces = css.split("@font-face").slice(1);
+  expect(faces).toHaveLength(9);
+  for (const face of faces) expect(face).toContain("unicode-range: U+");
+  const grotesk = faces.filter((f) => f.includes("Space Grotesk Variable"));
+  expect(
+    grotesk.map((f) => f.match(/space-grotesk-([a-z-]+?)-wght/)![1]),
+  ).toEqual(["vietnamese", "latin-ext", "latin"]);
+  expect(grotesk.at(-1)).toContain("U+0000-00FF");
 });
 
 test("fonts.css declares both families with relative woff2-first sources", async () => {
@@ -57,7 +69,7 @@ test("every family in the manifest is named in a font family token", async () =>
 test("only Space Grotesk and Space Mono files and licenses ship", async () => {
   const dir = await builtDir();
   const files = await readdir(join(dir, "fonts"));
-  expect(files.length).toBe(7);
+  expect(files.length).toBe(17);
   for (const file of files) {
     expect(file).toMatch(
       /^(space-grotesk-|space-mono-|LICENSE-space-grotesk\.txt$|LICENSE-space-mono\.txt$)/,
