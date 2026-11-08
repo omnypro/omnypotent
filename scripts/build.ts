@@ -6,6 +6,7 @@ import { formattedVariables } from "style-dictionary/utils";
 import { toCssColor, type ColorValue } from "./color.ts";
 import { toModule } from "./emit-module.ts";
 import { copyFonts, fontManifest, fontsCss } from "./fonts.ts";
+import { hurmeCss } from "./hurme.ts";
 import { cssName } from "./names.ts";
 import { validateExport } from "./validate-export.ts";
 
@@ -119,6 +120,7 @@ export async function build(options: BuildOptions = {}): Promise<void> {
   await copyFonts(outDir);
   const manifest = fontManifest();
   await Bun.write(join(outDir, "fonts.css"), fontsCss(manifest));
+  await Bun.write(join(outDir, "hurme.css"), hurmeCss());
   await Bun.write(
     join(outDir, "fonts.json"),
     `${JSON.stringify(manifest, null, 2)}\n`,

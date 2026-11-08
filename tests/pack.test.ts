@@ -16,6 +16,7 @@ test("the tarball has every built output and both font licenses", () => {
   for (const file of [
     "dist/tokens.css",
     "dist/fonts.css",
+    "dist/hurme.css",
     "dist/tokens.json",
     "dist/fonts.json",
     "dist/index.js",
