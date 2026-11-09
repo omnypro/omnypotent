@@ -16,6 +16,7 @@
     "./tokens.css": "./dist/tokens.css",
     "./fonts.css": "./dist/fonts.css",
     "./hurme.css": "./dist/hurme.css",
+    "./themes/*": "./dist/themes/*",
     "./tokens.json": "./dist/tokens.json",
     "./fonts.json": "./dist/fonts.json",
     "./fonts/*": "./dist/fonts/*"

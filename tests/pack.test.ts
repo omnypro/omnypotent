@@ -17,6 +17,7 @@ test("the tarball has every built output and both font licenses", () => {
     "dist/tokens.css",
     "dist/fonts.css",
     "dist/hurme.css",
+    "dist/themes/perpetual.css",
     "dist/tokens.json",
     "dist/fonts.json",
     "dist/index.js",

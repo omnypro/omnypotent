@@ -8,6 +8,7 @@ import { toModule } from "./emit-module.ts";
 import { copyFonts, fontManifest, fontsCss } from "./fonts.ts";
 import { hurmeCss } from "./hurme.ts";
 import { cssName } from "./names.ts";
+import { themeCss } from "./themes.ts";
 import { validateExport } from "./validate-export.ts";
 
 const REPO_ROOT = fileURLToPath(new URL("..", import.meta.url));
@@ -125,6 +126,24 @@ export async function build(options: BuildOptions = {}): Promise<void> {
     join(outDir, "fonts.json"),
     `${JSON.stringify(manifest, null, 2)}\n`,
   );
+
+  const semantic = await Bun.file(
+    join(root, "tokens/semantic/dark.json"),
+  ).json();
+  const roles = Object.keys(semantic.semantic).filter(
+    (key) => !key.startsWith("$"),
+  );
+  await mkdir(join(outDir, "themes"), { recursive: true });
+  for await (const file of new Bun.Glob("*.json").scan(
+    join(root, "tokens/themes"),
+  )) {
+    const name = file.slice(0, -".json".length);
+    const theme = await Bun.file(join(root, "tokens/themes", file)).json();
+    await Bun.write(
+      join(outDir, "themes", `${name}.css`),
+      themeCss(name, theme, roles),
+    );
+  }
 
   const modules = [toModule("tokens", tokens), toModule("fonts", manifest)];
   await Bun.write(join(outDir, "index.js"), modules.map((m) => m.js).join(""));

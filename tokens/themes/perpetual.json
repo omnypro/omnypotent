@@ -1,0 +1,245 @@
+{
+  "$description": "Perpetual's colors, read from App/Shared/Theme in the Perpetual repo. Every hex is a Display P3 value. The six semantic tokens are a mapping chosen for the brand site; the app has no role names of its own.",
+  "perpetual": {
+    "$type": "color",
+    "time": {
+      "50": {
+        "$value": "#E3FAFF"
+      },
+      "100": {
+        "$value": "#CBEFF9"
+      },
+      "200": {
+        "$value": "#A4DFF2"
+      },
+      "300": {
+        "$value": "#7ACBE9"
+      },
+      "400": {
+        "$value": "#56BDE7"
+      },
+      "500": {
+        "$value": "#2C99C9"
+      },
+      "600": {
+        "$value": "#0E82B3"
+      },
+      "700": {
+        "$value": "#006594"
+      },
+      "800": {
+        "$value": "#004872"
+      },
+      "900": {
+        "$value": "#002E51"
+      },
+      "950": {
+        "$value": "#001934"
+      }
+    },
+    "loop": {
+      "50": {
+        "$value": "#FEF4DF"
+      },
+      "100": {
+        "$value": "#F8E6C3"
+      },
+      "200": {
+        "$value": "#F0CF98"
+      },
+      "300": {
+        "$value": "#E6B469"
+      },
+      "400": {
+        "$value": "#D79334"
+      },
+      "500": {
+        "$value": "#C47B17"
+      },
+      "600": {
+        "$value": "#AD6400"
+      },
+      "700": {
+        "$value": "#8E4900"
+      },
+      "800": {
+        "$value": "#6C3100"
+      },
+      "900": {
+        "$value": "#4A1C00"
+      },
+      "950": {
+        "$value": "#2F0C00"
+      }
+    },
+    "machine": {
+      "50": {
+        "$value": "#E6FBEF"
+      },
+      "100": {
+        "$value": "#D2F1DF"
+      },
+      "200": {
+        "$value": "#AEE3C6"
+      },
+      "300": {
+        "$value": "#80D2A9"
+      },
+      "400": {
+        "$value": "#42BC87"
+      },
+      "500": {
+        "$value": "#30A574"
+      },
+      "600": {
+        "$value": "#1E8D60"
+      },
+      "700": {
+        "$value": "#136F4B"
+      },
+      "800": {
+        "$value": "#0B5135"
+      },
+      "900": {
+        "$value": "#00341F"
+      },
+      "950": {
+        "$value": "#001F11"
+      }
+    },
+    "red": {
+      "50": {
+        "$value": "#FFCDC1"
+      },
+      "100": {
+        "$value": "#FFC0B4"
+      },
+      "200": {
+        "$value": "#FFADA1"
+      },
+      "300": {
+        "$value": "#FF968B"
+      },
+      "400": {
+        "$value": "#E97B72"
+      },
+      "500": {
+        "$value": "#CD6960"
+      },
+      "600": {
+        "$value": "#AE5851"
+      },
+      "700": {
+        "$value": "#89443E"
+      },
+      "800": {
+        "$value": "#65302C"
+      },
+      "900": {
+        "$value": "#431E1B"
+      },
+      "950": {
+        "$value": "#280F0D"
+      }
+    },
+    "gray": {
+      "50": {
+        "$value": "#F5F5F5"
+      },
+      "100": {
+        "$value": "#E8E8E8"
+      },
+      "200": {
+        "$value": "#D4D4D4"
+      },
+      "300": {
+        "$value": "#BEBEBE"
+      },
+      "400": {
+        "$value": "#A3A3A3"
+      },
+      "500": {
+        "$value": "#8D8D8D"
+      },
+      "600": {
+        "$value": "#787878"
+      },
+      "700": {
+        "$value": "#5D5D5D"
+      },
+      "800": {
+        "$value": "#444444"
+      },
+      "900": {
+        "$value": "#2B2B2B"
+      },
+      "950": {
+        "$value": "#181818"
+      }
+    },
+    "seamless": {
+      "$value": "#9C8CF0"
+    },
+    "stitched": {
+      "$value": "#C9B83E"
+    },
+    "loop-flare": {
+      "$value": "#E8C089"
+    },
+    "caution": {
+      "$value": "#F5C518"
+    },
+    "heart": {
+      "$value": "#CF15D8"
+    },
+    "chrome": {
+      "window": {
+        "$value": "#1F1F1F"
+      },
+      "control-face": {
+        "$value": "#1A1A1A"
+      },
+      "key-edge": {
+        "$value": "#2F2F2F"
+      },
+      "note-edge": {
+        "$value": "#3E3E3E"
+      },
+      "well": {
+        "$value": "#0C0C0C"
+      },
+      "groove": {
+        "$value": "#010101"
+      }
+    },
+    "ink": {
+      "primary": {
+        "$value": "#FFFFFF"
+      },
+      "secondary": {
+        "$value": "{perpetual.gray.500}"
+      }
+    }
+  },
+  "semantic": {
+    "$type": "color",
+    "surface": {
+      "$value": "{perpetual.chrome.window}"
+    },
+    "surface-raised": {
+      "$value": "{perpetual.chrome.key-edge}"
+    },
+    "text": {
+      "$value": "{perpetual.ink.primary}"
+    },
+    "text-muted": {
+      "$value": "{perpetual.ink.secondary}"
+    },
+    "border": {
+      "$value": "{perpetual.chrome.note-edge}"
+    },
+    "accent": {
+      "$value": "{perpetual.time.400}"
+    }
+  }
+}
