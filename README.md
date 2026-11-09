@@ -34,6 +34,23 @@ You get Space Grotesk and Space Mono with the package, each in the latin, latin-
 
 `@omnypro/omnypotent/hurme.css` declares Hurme Geometric Sans 2, the licensed brand typeface, in seven weights with obliques. The files load from `cdn.omnyist.productions`, which allows the Omnyist sites. The package does not contain them.
 
+## Product themes
+
+A product theme re-points the semantic colors at the product's own colors. Import the theme and set `data-theme` on any element:
+
+```css
+@import "@omnypro/omnypotent/tokens.css";
+@import "@omnypro/omnypotent/themes/perpetual.css";
+```
+
+```html
+<section data-theme="perpetual">...</section>
+```
+
+Inside that element, `--color-surface`, `--color-text`, `--color-accent` and the other semantic colors take Perpetual's values. The product's own ramps are available as `--color-perpetual-time-400` and so on. Type tokens do not change.
+
+Each theme is a file in `tokens/themes`, named for its `data-theme` value. The build fails if a theme lacks a semantic token from `tokens/semantic/dark.json`, or defines one that file does not have. Perpetual's colors are Display P3, so the CSS uses `color(display-p3 ...)`. A browser without `color()` support cannot read them, and the themed element loses those colors.
+
 ## Develop
 
 ```sh
